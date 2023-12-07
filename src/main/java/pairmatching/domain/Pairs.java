@@ -12,16 +12,26 @@ public class Pairs {
     }
 
     public void process(List<String> shuffledCrews) {
-        if (shuffledCrews.size() % 2 != 0) {
-            // 홀수면 마지막 페어에 3명
-            for (int i = 0; i < shuffledCrews.size() - 3; i += 2) {
-                Pair pair = new Pair(shuffledCrews.subList(i, i + 2));
-                this.add(pair);
-            }
-            this.add(new Pair(shuffledCrews.subList(shuffledCrews.size() - 3, shuffledCrews.size())));
+        if (isCrewSizeOdd(shuffledCrews)) {
+            matchPairForOdd(shuffledCrews);
             return;
         }
-        // 짝수면 2명씩 페어
+        matchPairForEven(shuffledCrews);
+    }
+
+    private static boolean isCrewSizeOdd(List<String> shuffledCrews) {
+        return shuffledCrews.size() % 2 != 0;
+    }
+
+    private void matchPairForOdd(List<String> shuffledCrews) {
+        for (int i = 0; i < shuffledCrews.size() - 3; i += 2) {
+            Pair pair = new Pair(shuffledCrews.subList(i, i + 2));
+            this.add(pair);
+        }
+        this.add(new Pair(shuffledCrews.subList(shuffledCrews.size() - 3, shuffledCrews.size())));
+    }
+
+    private void matchPairForEven(List<String> shuffledCrews) {
         for (int i = 0; i < shuffledCrews.size(); i += 2) {
             this.add(new Pair(shuffledCrews.subList(i, i + 2)));
         }

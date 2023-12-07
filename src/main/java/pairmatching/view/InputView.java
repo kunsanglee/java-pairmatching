@@ -2,6 +2,8 @@ package pairmatching.view;
 
 import static pairmatching.exception.ExceptionMessage.INVALID_COURSE_LEVEL_MISSION;
 import static pairmatching.exception.ExceptionMessage.NOT_FOUND_MAIN_OPTION;
+import static pairmatching.view.InputView.InputMessage.COURSE_LEVEL_MISSION_DELIMITER;
+import static pairmatching.view.InputView.InputMessage.INPUT_MAIN_OPTION;
 import static pairmatching.view.InputView.InputMessage.MAIN_OPTION;
 import static pairmatching.view.InputView.InputMessage.READ_COURSE_LEVEL_MISSION;
 import static pairmatching.view.InputView.InputMessage.REMATCH;
@@ -16,8 +18,13 @@ import pairmatching.domain.Mission;
 
 public class InputView {
 
+    private static final int COURSE_LEVEL_MISSION_INPUT_SIZE = 3;
+    private static final int COURSE_INDEX = 0;
+    private static final int LEVEL_INDEX = 1;
+    private static final int MISSION_INDEX = 2;
+
     public static MainOption readMainOption() {
-        System.out.println("기능을 선택하세요.");
+        System.out.println(INPUT_MAIN_OPTION.getMessage());
         System.out.println(MAIN_OPTION.getMessage());
         try {
             return MainOption.of(Console.readLine());
@@ -31,11 +38,13 @@ public class InputView {
         System.out.println(READ_COURSE_LEVEL_MISSION.getMessage());
         try {
             String input = Console.readLine();
-            List<String> parsedInput = Arrays.asList(input.split(", "));
-            if (parsedInput.size() != 3) {
+            List<String> parsedInput = Arrays.asList(input.split(COURSE_LEVEL_MISSION_DELIMITER.getMessage()));
+            if (parsedInput.size() != COURSE_LEVEL_MISSION_INPUT_SIZE) {
                 throw new IllegalArgumentException(INVALID_COURSE_LEVEL_MISSION.getMessage());
             }
-            return Mission.of(Course.of(parsedInput.get(0)), Level.of(parsedInput.get(1)), parsedInput.get(2));
+            return Mission.of(Course.of(parsedInput.get(COURSE_INDEX)), Level.of(parsedInput.get(LEVEL_INDEX)),
+                    parsedInput.get(
+                            MISSION_INDEX));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return readCourseLevelMission();
@@ -53,6 +62,7 @@ public class InputView {
     }
 
     protected enum InputMessage {
+        INPUT_MAIN_OPTION("기능을 선택하세요."),
         MAIN_OPTION("1. 페어 매칭\n"
                 + "2. 페어 조회\n"
                 + "3. 페어 초기화\n"
@@ -61,6 +71,8 @@ public class InputView {
                 + "ex) 백엔드, 레벨1, 자동차경주"),
         REMATCH("매칭 정보가 있습니다. 다시 매칭하시겠습니까?\n"
                 + "네 | 아니오"),
+        COURSE_LEVEL_MISSION_DELIMITER(", "),
+
         ;
 
         private final String message;

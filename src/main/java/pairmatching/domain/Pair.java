@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Pair {
+    private static final int MIN_PAIR_SIZE = 2;
+    private static final int MAX_PAIR_SIZE = 3;
     private final List<String> pair = new ArrayList<>();
 
     public Pair(List<String> pair) {
@@ -15,7 +17,7 @@ public class Pair {
     }
 
     private void validate(List<String> pair) {
-        if (pair.size() < 2 || pair.size() > 3) {
+        if (pair.size() < MIN_PAIR_SIZE || pair.size() > MAX_PAIR_SIZE) {
             throw new IllegalArgumentException(INVALID_PAIR.getMessage());
         }
     }

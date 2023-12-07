@@ -37,4 +37,9 @@ public class MissionRepository {
         return Optional.ofNullable(missionPairs.get(mission))
                 .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_MISSION.getMessage()));
     }
+
+    public static void clear() {
+        addMissionByCourse(Course.BACKEND);
+        addMissionByCourse(Course.FRONTEND);
+    }
 }

@@ -1,5 +1,6 @@
 package pairmatching.view;
 
+import static pairmatching.view.OutputView.OutputMessage.CLEAR;
 import static pairmatching.view.OutputView.OutputMessage.COURSE_LEVEL_MISSION;
 import static pairmatching.view.OutputView.OutputMessage.PAIR_DELIMITER;
 import static pairmatching.view.OutputView.OutputMessage.PAIR_RESULT;
@@ -19,6 +20,10 @@ public class OutputView {
                 Collectors.joining(PAIR_DELIMITER.getMessage()))));
     }
 
+    public static void printClear() {
+        System.out.println(CLEAR.getMessage());
+    }
+
     protected enum OutputMessage {
         COURSE_LEVEL_MISSION("#############################################\n"
                 + "과정: 백엔드 | 프론트엔드\n"
@@ -31,6 +36,7 @@ public class OutputView {
                 + "############################################\n"),
         PAIR_RESULT("페어 매칭 결과입니다."),
         PAIR_DELIMITER(" : "),
+        CLEAR("초기화 되었습니다. "),
         ;
 
         private final String message;

@@ -14,7 +14,12 @@ public class PairMatchingController implements SubController {
     @Override
     public MainOption process() {
         OutputView.printCourseLevelMission(); // 과정 레벨 미션 출력.
-        return matchPair();
+        try {
+            return matchPair();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return matchPair();
+        }
     }
 
     private MainOption matchPair() {

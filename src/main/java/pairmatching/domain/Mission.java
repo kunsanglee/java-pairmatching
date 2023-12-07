@@ -17,6 +17,10 @@ public class Mission {
         this.name = name;
     }
 
+    public boolean isFrontEnd() {
+        return this.course.equals(Course.FRONTEND);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -32,9 +36,5 @@ public class Mission {
     @Override
     public int hashCode() {
         return Objects.hash(course, level, name);
-    }
-
-    public boolean isFrontEnd() {
-        return this.course.equals(Course.FRONTEND);
     }
 }

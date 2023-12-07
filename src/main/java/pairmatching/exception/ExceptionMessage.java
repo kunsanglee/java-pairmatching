@@ -5,7 +5,9 @@ public enum ExceptionMessage {
     NOT_FOUND_LEVEL("존재하지 않는 레벨입니다."),
     NOT_FOUND_MISSION("존재하지 않는 미션입니다."),
     NOT_FOUND_MAIN_OPTION("존재하지 않는 옵션입니다."),
+    NOT_FOUND_MATCH_RESULT("매칭 이력이 없습니다."),
     INVALID_PAIR("잘못된 페어입니다."),
+    INVALID_COURSE_LEVEL_MISSION("잘못된 입력입니다."),
     ;
 
     private static final String PREFIX = "[ERROR] ";

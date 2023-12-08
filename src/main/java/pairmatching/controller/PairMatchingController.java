@@ -1,5 +1,7 @@
 package pairmatching.controller;
 
+import static pairmatching.controller.Retry.retry;
+
 import java.util.List;
 import pairmatching.domain.CrewShuffler;
 import pairmatching.domain.MainOption;
@@ -13,7 +15,7 @@ import pairmatching.view.OutputView;
 public class PairMatchingController implements SubController {
     @Override
     public MainOption process() {
-        OutputView.printCourseLevelMission(); // 과정 레벨 미션 출력.
+        OutputView.printCourseLevelMission();
         try {
             return matchPair();
         } catch (IllegalArgumentException e) {
@@ -23,18 +25,16 @@ public class PairMatchingController implements SubController {
     }
 
     private MainOption matchPair() {
-        Mission findMission = InputView.readCourseLevelMission(); // 과정,레벨,미션을 입력받는다.
-        Pairs pairs = MissionRepository.findPairsByMission(findMission); // 미션저장소에 저장된 페어를 찾는다.
+        Mission findMission = retry(InputView::readCourseLevelMission);
+        Pairs pairs = MissionRepository.findPairsByMission(findMission);
         List<String> crews = findCrews(findMission);
-        List<String> shuffledCrews = shuffle(crews); // 크루들을 섞는다.
+        List<String> shuffledCrews = shuffle(crews);
         if (pairs.isEmpty()) {
             return matchShuffledPair(pairs, shuffledCrews);
         }
-        // 매칭이력이 있으면 다시 매칭할지 입력받는다.
-        if (InputView.readRematch()) { // 다시 매칭한다
+        if (retry(InputView::readRematch)) {
             return matchShuffledPair(pairs, shuffledCrews);
         }
-        // InputView.readCourseLevelMission()부터 다시 실행. 과정, 레벨, 미션을 선택하세요.
         return matchPair();
     }
 
@@ -49,7 +49,6 @@ public class PairMatchingController implements SubController {
     }
 
     private static List<String> findCrews(Mission findMission) {
-        List<String> crews = CrewRepository.getCrews(findMission); // 과정에 해당하는 크루들을 조회한다.
-        return crews;
+        return CrewRepository.getCrews(findMission);
     }
 }

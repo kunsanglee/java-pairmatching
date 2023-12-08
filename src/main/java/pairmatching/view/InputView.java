@@ -26,39 +26,28 @@ public class InputView {
     public static MainOption readMainOption() {
         System.out.println(INPUT_MAIN_OPTION.getMessage());
         System.out.println(MAIN_OPTION.getMessage());
-        try {
-            return MainOption.of(Console.readLine());
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return readMainOption();
-        }
+        return MainOption.of(Console.readLine());
     }
 
     public static Mission readCourseLevelMission() {
         System.out.println(READ_COURSE_LEVEL_MISSION.getMessage());
-        try {
-            String input = Console.readLine();
-            List<String> parsedInput = Arrays.asList(input.split(COURSE_LEVEL_MISSION_DELIMITER.getMessage()));
-            if (parsedInput.size() != COURSE_LEVEL_MISSION_INPUT_SIZE) {
-                throw new IllegalArgumentException(INVALID_COURSE_LEVEL_MISSION.getMessage());
-            }
-            return Mission.of(Course.of(parsedInput.get(COURSE_INDEX)), Level.of(parsedInput.get(LEVEL_INDEX)),
-                    parsedInput.get(
-                            MISSION_INDEX));
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return readCourseLevelMission();
+        String input = Console.readLine();
+        List<String> parsedInput = Arrays.asList(input.split(COURSE_LEVEL_MISSION_DELIMITER.getMessage()));
+        validateInputSize(parsedInput);
+        return Mission.of(Course.of(parsedInput.get(COURSE_INDEX)),
+                Level.of(parsedInput.get(LEVEL_INDEX)),
+                parsedInput.get(MISSION_INDEX));
+    }
+
+    private static void validateInputSize(List<String> parsedInput) {
+        if (parsedInput.size() != COURSE_LEVEL_MISSION_INPUT_SIZE) {
+            throw new IllegalArgumentException(INVALID_COURSE_LEVEL_MISSION.getMessage());
         }
     }
 
     public static boolean readRematch() {
-        try {
-            System.out.println(REMATCH.getMessage());
-            return Rematch.REMATCH.isRematch(Console.readLine());
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return readRematch();
-        }
+        System.out.println(REMATCH.getMessage());
+        return Rematch.REMATCH.isRematch(Console.readLine());
     }
 
     protected enum InputMessage {

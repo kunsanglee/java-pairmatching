@@ -12,28 +12,15 @@ public class Pairs {
     }
 
     public void process(List<String> shuffledCrews) {
-        if (isCrewSizeOdd(shuffledCrews)) {
-            matchPairForOdd(shuffledCrews);
-            return;
-        }
-        matchPairForEven(shuffledCrews);
-    }
-
-    private static boolean isCrewSizeOdd(List<String> shuffledCrews) {
-        return shuffledCrews.size() % 2 != 0;
-    }
-
-    private void matchPairForOdd(List<String> shuffledCrews) {
-        for (int i = 0; i < shuffledCrews.size() - 3; i += 2) {
-            Pair pair = new Pair(shuffledCrews.subList(i, i + 2));
-            this.add(pair);
-        }
-        this.add(new Pair(shuffledCrews.subList(shuffledCrews.size() - 3, shuffledCrews.size())));
-    }
-
-    private void matchPairForEven(List<String> shuffledCrews) {
-        for (int i = 0; i < shuffledCrews.size(); i += 2) {
+        int size = shuffledCrews.size();
+        int pairSize = size / 2 * 2;
+        for (int i = 0; i < pairSize; i += 2) {
             this.add(new Pair(shuffledCrews.subList(i, i + 2)));
+        }
+        if (size > pairSize) {
+            int matchedPairSize = this.pairs.size();
+            Pair pair = this.pairs.get(matchedPairSize - 1);
+            pair = pair.add(shuffledCrews.get(matchedPairSize - 1));
         }
     }
 

@@ -1,5 +1,7 @@
 package pairmatching.controller;
 
+import static pairmatching.controller.Retry.retry;
+
 import java.util.EnumMap;
 import java.util.Map;
 import pairmatching.domain.MainOption;
@@ -17,7 +19,7 @@ public class MainController {
 
     public void run() {
         while (true) {
-            MainOption mainOption = InputView.readMainOption();
+            MainOption mainOption = retry(InputView::readMainOption);
             SubController subController = subControllers.get(mainOption);
             if (subController.process().equals(MainOption.QUIT)) {
                 break;

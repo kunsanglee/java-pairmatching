@@ -25,4 +25,9 @@ public class Pair {
     public List<String> getPair() {
         return Collections.unmodifiableList(pair);
     }
+
+    public Pair add(String crew) {
+        this.pair.add(crew);
+        return new Pair(this.pair);
+    }
 }
